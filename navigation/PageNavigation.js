@@ -1,36 +1,35 @@
-import React from 'react'
-import {createAppContainer, StackViewTransitionConfigs} from "react-navigation";
-// import {createStackNavigator} from "react-navigation-stack";
-import {createStackNavigator, CardStyleInterpolators} from '@react-navigation/stack';
+import React from "react";
+import {StatusBar} from 'react-native'
+import {
+    createStackNavigator,
+    CardStyleInterpolators,
+} from "@react-navigation/stack";
 import DetailScreen from "../screens/DetailScreen";
 import SearchScreen from "../screens/SearchScreen";
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer} from "@react-navigation/native";
 
 const Stack = createStackNavigator();
 const addConfig = {
-    // gestureResponseDistance: {
-    //     horizontal: '100%',
-    // },
-    gestureDirection: 'horizontal',
+    gestureDirection: "horizontal",
     gestureEnabled: true,
     cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
     detachPreviousScreen: false,
-}
+};
 
 const MainNavigation = () => {
     return (
         <NavigationContainer>
+            <StatusBar barStyle={'light-content'}/>
             <Stack.Navigator
                 initialRouteName="SearchScreen"
                 headerMode="hidden"
-                screenOptions={() => addConfig}>
+                screenOptions={() => addConfig}
+            >
                 <Stack.Screen name="Search" component={SearchScreen}/>
                 <Stack.Screen name="Detail" component={DetailScreen}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
-}
+};
 
-
-export default MainNavigation
-
+export default MainNavigation;
