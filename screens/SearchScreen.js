@@ -1,17 +1,18 @@
-import React, { useEffect } from "react";
-import { View, FlatList, Text, ActivityIndicator } from "react-native";
-import { GIF_URL, TREND_GIF_URL } from "../utils/api";
+import React, {useEffect} from "react";
+import {View, FlatList, Text, ActivityIndicator, RefreshControl} from "react-native";
+import {GIF_URL, TREND_GIF_URL} from "../utils/api";
 import SearchArea from "../components/SearchArea";
 import ListItem from "../components/ListItem";
-import { ScaledSheet } from "react-native-size-matters";
-import { useSelector, useDispatch } from "react-redux";
-import { saveGifs, setLoaded } from "../store/Gifs/actions";
+import {ScaledSheet} from "react-native-size-matters";
+import {useSelector, useDispatch} from "react-redux";
+import {saveGifs, setLoaded} from "../store/Gifs/actions";
 
-const SearchScreen = ({ navigation }) => {
+const SearchScreen = ({navigation}) => {
     const dispatch = useDispatch();
     const gifs = useSelector((state) => state.gifs.gifs);
     const term = useSelector((state) => state.gifs.term);
     const loaded = useSelector((state) => state.gifs.loaded);
+    const [refreshing, setRefreshing] = React.useState(false);
 
     async function fetchGifs(rand) {
         dispatch(setLoaded(false));
@@ -27,15 +28,26 @@ const SearchScreen = ({ navigation }) => {
         dispatch(setLoaded(true));
     }
 
+    const refreshHandler = () => {
+        setRefreshing(true);
+        if (term.length > 0) {
+            fetchGifs();
+        } else {
+            fetchGifs(true);
+        }
+        setRefreshing(false);
+
+    }
+
     useEffect(() => {
         fetchGifs(true);
     }, []);
 
     return (
         <View style={styles.container}>
-            <SearchArea fetchGifs={fetchGifs} />
+            <SearchArea fetchGifs={fetchGifs}/>
             {!loaded && (
-                <View style={{ flex: 1, justifyContent: "center" }}>
+                <View style={{flex: 1, justifyContent: "center"}}>
                     <ActivityIndicator
                         size={"large"}
                         color="rgba(255,255,255,.5)"
@@ -46,7 +58,7 @@ const SearchScreen = ({ navigation }) => {
                 <View>
                     {gifs.length === 0 && !!term && (
                         <View style={styles.emptySearch}>
-                            <Text style={{ color: "white" }}>
+                            <Text style={{color: "white"}}>
                                 No results for:{" "}
                                 <Text
                                     style={{
@@ -63,10 +75,15 @@ const SearchScreen = ({ navigation }) => {
                     )}
                     <FlatList
                         data={gifs}
-                        renderItem={({ item }) => (
-                            <ListItem item={item} navigation={navigation} />
+                        renderItem={({item}) => (
+                            <ListItem item={item} navigation={navigation}/>
                         )}
                         numColumns={2}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={refreshing}
+                                onRefresh={refreshHandler}/>
+                        }
                     />
                 </View>
             )}
