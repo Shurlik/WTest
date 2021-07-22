@@ -6,6 +6,7 @@ import ListItem from "../components/ListItem";
 import {ScaledSheet} from "react-native-size-matters";
 import {useSelector, useDispatch} from "react-redux";
 import {saveGifs, setLoaded} from "../store/Gifs/actions";
+import MasonryList from '@react-native-seoul/masonry-list'; //based on ScrollView (
 
 const SearchScreen = ({navigation}) => {
     const dispatch = useDispatch();
@@ -36,7 +37,6 @@ const SearchScreen = ({navigation}) => {
             fetchGifs(true);
         }
         setRefreshing(false);
-
     }
 
     useEffect(() => {
@@ -73,17 +73,16 @@ const SearchScreen = ({navigation}) => {
                             </Text>
                         </View>
                     )}
-                    <FlatList
+                    <MasonryList
                         data={gifs}
+                        keyExtractor={(item, index) => index.toString()}
                         renderItem={({item}) => (
-                            <ListItem item={item} navigation={navigation}/>
+                            <ListItem item={item} navigation={navigation} key={item.id}/>
                         )}
                         numColumns={2}
-                        refreshControl={
-                            <RefreshControl
-                                refreshing={refreshing}
-                                onRefresh={refreshHandler}/>
-                        }
+                        showsVerticalScrollIndicator={false}
+                        refreshing={refreshing}
+                        onRefresh={refreshHandler}
                     />
                 </View>
             )}
@@ -96,7 +95,6 @@ export default SearchScreen;
 const styles = ScaledSheet.create({
     container: {
         flex: 1,
-        alignItems: "center",
         paddingHorizontal: "8@s",
         backgroundColor: "#000",
     },
