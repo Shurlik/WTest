@@ -1,8 +1,9 @@
 import React from "react";
-import { View, Image, TouchableOpacity } from "react-native";
-import { ScaledSheet } from "react-native-size-matters";
+import {View, Image, TouchableOpacity} from "react-native";
+import {ScaledSheet} from "react-native-size-matters";
 
-const LIstItem = ({ item, navigation }) => {
+const ListItem = ({item, navigation}) => {
+    const [width, height] = [parseInt(item.images.downsized_still.width), parseInt(item.images.downsized_still.height)]
     return (
         <TouchableOpacity
             onPress={() =>
@@ -13,29 +14,30 @@ const LIstItem = ({ item, navigation }) => {
         >
             <View style={styles.imageWrapper}>
                 <Image
-                    style={styles.image}
+                    style={{...styles.image, aspectRatio: width/height}}
                     source={{
                         uri: item.images.downsized_still.url,
                     }}
-                    resizeMode="cover"
+                    resizeMode="contain"
                 />
             </View>
         </TouchableOpacity>
     );
 };
 
-export default LIstItem;
-
 const styles = ScaledSheet.create({
     image: {
-        width: "100%",
-        height: "100%",
+        alignSelf: 'stretch',
+        resizeMode: 'cover',
+
     },
     imageWrapper: {
+        alignSelf: 'stretch',
+        flex: 1,
         margin: 5,
-        width: "160@s",
-        height: "160@s",
         borderRadius: 16,
         overflow: "hidden",
     },
 });
+
+export default ListItem;
