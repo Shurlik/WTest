@@ -1,9 +1,9 @@
 import React from "react";
-import { View, TouchableOpacity } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
-import { ScaledSheet } from "react-native-size-matters";
+import {View, TouchableOpacity} from "react-native";
+import {AntDesign} from "@expo/vector-icons";
+import {ScaledSheet} from "react-native-size-matters";
 
-const BackButton = ({ navigation }) => {
+const BackButton = ({navigation}) => {
     return (
         <TouchableOpacity
             style={styles.container}
@@ -13,7 +13,7 @@ const BackButton = ({ navigation }) => {
                 <AntDesign
                     name="left"
                     size={25}
-                    color="black"
+                    // color="black"
                     style={styles.back}
                 />
             </View>
@@ -30,12 +30,16 @@ const styles = ScaledSheet.create({
         position: "absolute",
         top: "15@vs",
         left: "15@s",
-        backgroundColor: "#fff",
+        backgroundColor: "rgba(255,255,255,.5)",
         borderRadius: 72,
         justifyContent: "center",
         alignItems: "center",
+        borderWidth: 1,
+        borderColor: 'rgba(0,0,0,0.1)'
     },
     back: {
         paddingRight: "3@s",
+        color: 'rgba(0,0,0,0.5)',
+        fontWeight: 'bold'
     },
 });

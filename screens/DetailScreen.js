@@ -1,5 +1,5 @@
 import React from "react";
-import {Text, View, Image, Dimensions} from "react-native";
+import {Text, View, Image, Dimensions, SafeAreaView} from "react-native";
 import BackButton from "../components/BackButton.js";
 import ListItem from "../components/ListItem.js";
 import UserData from "../components/UserData.js";
@@ -15,11 +15,11 @@ const DetailScreen = (props) => {
     const [width, height] = [parseInt(props.route.params.item.images.downsized_still.width), parseInt(props.route.params.item.images.downsized_still.height)]
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <View style={styles.bigImage}>
                 <Image
                     style={{
-                        width: Dimensions.get("screen").width / Dimensions.get("screen").height > width / height ? "60%" : "100%", // Try to fix lo-o-o-o-ng images
+                        width: Dimensions.get("window").width / Dimensions.get("window").height > width / height ? "65%" : "100%", // Try to fix lo-o-o-o-ng images
                         aspectRatio: width / height
                     }}
                     source={{
@@ -47,7 +47,7 @@ const DetailScreen = (props) => {
                 showsVerticalScrollIndicator={false}
             />
             <BackButton navigation={props.navigation}/>
-        </View>
+        </SafeAreaView>
     );
 };
 
