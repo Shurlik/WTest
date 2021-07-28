@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {View, FlatList, Text, ActivityIndicator, RefreshControl} from "react-native";
+import {View, Text, ActivityIndicator, SafeAreaView} from "react-native";
 import {GIF_URL, TREND_GIF_URL} from "../utils/api";
 import SearchArea from "../components/SearchArea";
 import ListItem from "../components/ListItem";
@@ -44,7 +44,7 @@ const SearchScreen = ({navigation}) => {
     }, []);
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <SearchArea fetchGifs={fetchGifs}/>
             {!loaded && (
                 <View style={{flex: 1, justifyContent: "center"}}>
@@ -86,7 +86,7 @@ const SearchScreen = ({navigation}) => {
                     />
                 </View>
             )}
-        </View>
+        </SafeAreaView>
     );
 };
 

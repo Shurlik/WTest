@@ -1,12 +1,12 @@
 import React from "react";
-import { View, TextInput } from "react-native";
-import { ScaledSheet } from "react-native-size-matters";
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import {View, TextInput} from "react-native";
+import {ScaledSheet} from "react-native-size-matters";
+import {FontAwesome, Ionicons} from "@expo/vector-icons";
 import CancelButton from "./CancelButton";
-import { useSelector, useDispatch } from "react-redux";
-import { saveGifs, saveTerms } from "../store/Gifs/actions";
+import {useSelector, useDispatch} from "react-redux";
+import {saveGifs, saveTerms} from "../store/Gifs/actions";
 
-const SearchArea = ({ fetchGifs }) => {
+const SearchArea = ({fetchGifs}) => {
     const dispatch = useDispatch();
     const term = useSelector((state) => state.gifs.term);
 
@@ -24,7 +24,7 @@ const SearchArea = ({ fetchGifs }) => {
         dispatch(saveGifs([]));
         onEdit("");
     };
-    
+
     return (
         <View style={styles.container}>
             <View style={styles.search}>
@@ -46,13 +46,13 @@ const SearchArea = ({ fetchGifs }) => {
                     <Ionicons
                         name="close-circle"
                         size={24}
-                        color="white"
+                        // color="white"
                         style={styles.closeCircle}
                         onPress={cancelHandel}
                     />
                 )}
             </View>
-            {term.length > 0 && <CancelButton onPress={cancelHandel} />}
+            {/*{term.length > 0 && <CancelButton onPress={cancelHandel}/>}*/}
         </View>
     );
 };
@@ -89,6 +89,7 @@ const styles = ScaledSheet.create({
     },
     closeCircle: {
         marginRight: 18,
+        color: 'rgba(255,255,255,.5)'
     },
 });
 
